@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="./style.css"/>
     </head>
     <body>
-        <header class="navbar">
+        <div class="navbar">
             <div class="title" >Wordle</div>
 
             <div class="buttons">
@@ -16,7 +16,7 @@
                 <button id="Game_Instructions"">&#9432</button>
             </div>
             
-        </header>
+        </div>
 
         <div class = "container">
         <div class="container_left">
@@ -41,13 +41,14 @@
         </div>
 
 
+        <div id = "wrong"> </div>
         <div id = "hint"> </div>
 
-
         <div class = "footer">
+            
           &copy Nimna Wijedasa
         </div>
 
-        <script src="./wordle.js" type="module"></script>
+        <script src="wordle.js" type="module"></script>
     </body>
 </html>
