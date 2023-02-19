@@ -1,4 +1,3 @@
-
 const state = {
   secret: '',
   hint : '',
@@ -47,12 +46,6 @@ list().then((data) => {
 });
 
 
-
-
-
-
-
-
 const gameInstructionsBtn = document.getElementById("Game_Instructions");
 gameInstructionsBtn.addEventListener("click", () => {
   var gameInstructions = document.getElementById("info");
@@ -79,20 +72,16 @@ Hint_icon.addEventListener("click", () => {
 
 });
 
-
-
 const button = document.getElementById('Dark_Mode');
 const body = document.body;
 const html = document.documentElement;
 const navbar = document.querySelector('.navbar');
-const buttons = document.querySelectorAll(".navbar .buttons button");
 const darkModeButton = document.getElementById('Dark_Mode');
 
 button.addEventListener('click', () => {
   body.classList.toggle('dark');
   html.classList.toggle('dark');
   navbar.classList.toggle('dark');
-  buttons. classList.toggle('dark');
   footer.classList.toggle('dark');
 
 });
@@ -107,44 +96,15 @@ click.addEventListener('click', () => {
   Game_Instructions.classList.toggle('hidden');
 });
 
-function drawGrid(container) {
-  const grid = document.createElement('div');
-  grid.className = 'grid';
-
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      drawBox(grid, i, j);
-    }
-  }
-  container.appendChild(grid);
-}
-
-function updateGrid() {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      const box = document.getElementById(`box${i}${j}`);
-      box.textContent = state.grid[i][j];
-    }
-  }
-}
-
-function drawBox(container, row, col, letter = '') {
-  const box = document.createElement('div');
-  box.className = 'box';
-  box.textContent = letter;
-  box.id = `box${row}${col}`;
-  container.appendChild(box);
-  return box;
-}
-
 function registerKeyboardEvents() {
   document.body.onkeydown = (e) => {
     let key = e.key;
     key = key.toUpperCase();
     if (key === 'ENTER') {
-      if (state.currentRow == 4){
+      if (state.currentRow === 4){
         var show = document.getElementById("hint");
-        document.hint.style.backgroundColor = "red";
+        show.style.display = "none";
+        var show = document.getElementById("wrong");
         show.innerHTML = 'you missed the word ' + state.secret + ' and lost!';
       }
       if (state.currentCol < 4) {
@@ -152,16 +112,9 @@ function registerKeyboardEvents() {
       }
       else{
         const word = getCurrentWord();
-        // if (isWordValid(word)) {
-        //   revealWord(word);
-        //   state.currentRow++;
-        //   state.currentCol = 0;
-        // } else 
-        
           revealWord(word);
           state.currentRow++;
           state.currentCol = 0;
-        
       }
     }
     if (key === 'BACKSPACE') {
@@ -171,7 +124,10 @@ function registerKeyboardEvents() {
       addLetter(key);
     }
     if (state.currentRow == 4){
-      alert(`Better luck next time! The word was ${state.secret}.`);
+      var show = document.getElementById("hint");
+      show.style.display = "none";
+      var show = document.getElementById("wrong");
+      show.innerHTML = 'you missed the word ' + state.secret + ' and lost!';
     }
     updateGrid();
   };
@@ -182,10 +138,6 @@ function registerKeyboardEvents() {
 function getCurrentWord() {
   return state.grid[state.currentRow].reduce((prev, curr) => prev + curr);
 }
-
-// function isWordValid(word) {
-//   return dictionary.includes(word);
-// }
 
 function getNumOfOccurrencesInWord(word, letter) {
   let result = 0;
@@ -227,22 +179,53 @@ function revealWord(guess) {
       }
   }
 
-  const isWinner = state.secret === guess;
-
-  
-
+  var isWinner = state.secret === guess;
     if (isWinner) {
-      const winnerGif = document.createElement('img');
-      var show = document.getElementById("hint");
+      const winnerGif = document.getElementById('img');
+      const show = document.getElementById("hint");
+      const game = document.getElementById('game');
+
+      var wrong = document.getElementById("wrong");
+      wrong.style.display = "none";
+
+
       show.style.display = "none";
       winnerGif.style.display = 'block';
-      winnerGif.style.margin = '0 auto';
-      winnerGif.src = './assets/congrats.gif';
-      const game = document.getElementById('game');
-      game.parentNode.replaceChild(winnerGif, game);
+      game.style.display = 'none';
 
     } 
 }
+
+function drawGrid(container) {
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      drawBox(grid, i, j);
+    }
+  }
+  container.appendChild(grid);
+}
+
+function updateGrid() {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      const box = document.getElementById(`box${i}${j}`);
+      box.textContent = state.grid[i][j];
+    }
+  }
+}
+
+function drawBox(container, row, col, letter = '') {
+  const box = document.createElement('div');
+  box.className = 'box';
+  box.textContent = letter;
+  box.id = `box${row}${col}`;
+  container.appendChild(box);
+  return box;
+}
+
 
 function isLetter(key) {
   return key.length === 1 && key.match(/[a-z]/i);
@@ -260,6 +243,57 @@ function removeLetter() {
   state.currentCol--;
 }
 
+
+const start_over = document.getElementById('start_over');
+start_over.addEventListener('click', () => {
+
+  const wrong = document.getElementById("wrong");
+  wrong.style.display = "none";
+
+  const show = document.getElementById("hint");
+  show.style.display = "none";
+
+  const winnerGif = document.getElementById('img');
+  winnerGif.style.display = 'none';
+
+
+  const game = document.getElementById('game');
+  game.style.display = 'flex';
+  
+  
+
+
+  state.currentRow = 0;
+  state.currentCol = 0;
+  clearformat();
+  state.grid = Array(4)
+
+    .fill()
+    .map(() => Array(4).fill(''));
+  updateGrid();
+
+
+  // list().then(() => {
+  //   state.secret = guessword.word;
+  //   state.hint = guessword.hint;
+  //   console.log(state.secret);
+  
+  // });
+
+});
+
+
+function clearformat() {
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          var box = document.getElementById(`box${i}${j}`);
+          box.classList.remove('right');
+          box.classList.remove('wrong');
+          box.classList.remove('empty');
+      }
+    }
+
+}
 
 
 function startup() {
