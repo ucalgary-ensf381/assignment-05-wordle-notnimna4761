@@ -102,10 +102,15 @@ function registerKeyboardEvents() {
     key = key.toUpperCase();
     if (key === 'ENTER') {
       if (state.currentRow === 4){
+<<<<<<< Updated upstream
 
         const show = document.getElementById("hint");
         show.style.display = "none";
 
+=======
+        var show = document.getElementById("hint");
+        show.style.display = "none";
+>>>>>>> Stashed changes
         var show = document.getElementById("wrong");
         show.innerHTML = 'you missed the word ' + state.secret + ' and lost!';
       }
@@ -126,10 +131,15 @@ function registerKeyboardEvents() {
       addLetter(key);
     }
     if (state.currentRow == 4){
+<<<<<<< Updated upstream
 
       const show = document.getElementById("hint");
       show.style.display = "none";
       
+=======
+      var show = document.getElementById("hint");
+      show.style.display = "none";
+>>>>>>> Stashed changes
       var show = document.getElementById("wrong");
       show.innerHTML = 'you missed the word ' + state.secret + ' and lost!';
     }
@@ -188,6 +198,14 @@ function revealWord(guess) {
       const winnerGif = document.getElementById('img');
       const show = document.getElementById("hint");
       const game = document.getElementById('game');
+<<<<<<< Updated upstream
+=======
+
+      var wrong = document.getElementById("wrong");
+      wrong.style.display = "none";
+
+
+>>>>>>> Stashed changes
       show.style.display = "none";
       winnerGif.style.display = 'block';
       game.style.display = 'none';
