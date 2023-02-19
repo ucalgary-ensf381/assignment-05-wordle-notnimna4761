@@ -273,12 +273,12 @@ start_over.addEventListener('click', () => {
   updateGrid();
 
 
-  // list().then(() => {
-  //   state.secret = guessword.word;
-  //   state.hint = guessword.hint;
-  //   console.log(state.secret);
+  list().then(() => {
+    state.secret = guessword.word;
+    state.hint = guessword.hint;
+    console.log(state.secret);
   
-  // });
+  });
 
 });
 
